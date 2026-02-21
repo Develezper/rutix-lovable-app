@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, memo } from 'react';
 import L from 'leaflet';
 
 // Fix leaflet default icon
@@ -26,7 +26,7 @@ interface MapViewProps {
   recordingPath?: [number, number][];
 }
 
-export default function MapView({
+function MapViewInner({
   center = [6.2518, -75.5636],
   zoom = 13,
   segments = [],
@@ -39,10 +39,13 @@ export default function MapView({
   const mapRef = useRef<L.Map | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const layersRef = useRef<L.LayerGroup | null>(null);
+  const initRef = useRef(false);
 
-  // Initialize map
+  // Initialize map once
   useEffect(() => {
-    if (!containerRef.current || mapRef.current) return;
+    if (!containerRef.current || initRef.current) return;
+    initRef.current = true;
+
     const map = L.map(containerRef.current, { zoomControl: false }).setView(center, zoom);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap',
@@ -51,10 +54,14 @@ export default function MapView({
     mapRef.current = map;
     layersRef.current = L.layerGroup().addTo(map);
 
+    setTimeout(() => map.invalidateSize(), 100);
+
     return () => {
       map.remove();
       mapRef.current = null;
+      initRef.current = false;
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Update layers
@@ -62,7 +69,6 @@ export default function MapView({
     if (!mapRef.current || !layersRef.current) return;
     layersRef.current.clearLayers();
 
-    // Segments
     segments.forEach(seg => {
       L.polyline(seg.path, {
         color: seg.color,
@@ -72,12 +78,10 @@ export default function MapView({
       }).addTo(layersRef.current!);
     });
 
-    // Recording path
     if (recordingPath && recordingPath.length > 1) {
       L.polyline(recordingPath, { color: '#10b981', weight: 5, opacity: 0.9 }).addTo(layersRef.current);
     }
 
-    // Markers
     markers.forEach(m => {
       const icon = L.divIcon({
         className: 'custom-marker',
@@ -88,7 +92,6 @@ export default function MapView({
       L.marker(m.position, { icon }).bindPopup(m.label).addTo(layersRef.current!);
     });
 
-    // Current position
     if (currentPosition) {
       const pulseIcon = L.divIcon({
         className: 'custom-marker',
@@ -109,3 +112,6 @@ export default function MapView({
 
   return <div ref={containerRef} className={`map-container ${className}`} style={{ height: '100%', width: '100%' }} />;
 }
+
+const MapView = memo(MapViewInner);
+export default MapView;

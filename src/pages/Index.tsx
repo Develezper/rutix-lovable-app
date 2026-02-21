@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Bus, ArrowDownUp, MapPin, Users, Route, TrendingUp } from 'lucide-react';
@@ -32,7 +32,7 @@ const Index = () => {
   ] as any[];
 
   // Show some validated route stops on map
-  const mapSegments = busRoutes
+  const mapSegments = useMemo(() => busRoutes
     .filter(r => r.status === 'validated')
     .slice(0, 4)
     .map(route => ({
@@ -42,7 +42,7 @@ const Index = () => {
       }),
       color: route.color + '40',
       dashed: false,
-    }));
+    })), []);
 
   return (
     <div className="min-h-screen flex flex-col pb-20">
