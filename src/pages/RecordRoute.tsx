@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play, Square, Pause, CheckCircle2, Bus, Clock, MapPin, Navigation } from 'lucide-react';
+import { Play, Square, Pause, CheckCircle2, Bus, Clock, MapPin, Navigation, ChevronDown } from 'lucide-react';
 import MapView from '@/components/MapView';
 import { busRoutes } from '@/data/mockData';
 import { toast } from 'sonner';
@@ -20,6 +20,9 @@ const simulatedPath: [number, number][] = [
 export default function RecordRoute() {
   const [status, setStatus] = useState<'idle' | 'recording' | 'paused' | 'saved'>('idle');
   const [selectedBus, setSelectedBus] = useState('');
+  const [busInputValue, setBusInputValue] = useState('');
+  const [showBusDropdown, setShowBusDropdown] = useState(false);
+  const busInputRef = useRef<HTMLInputElement>(null);
   const [direction, setDirection] = useState('ida');
   const [path, setPath] = useState<[number, number][]>([]);
   const [currentPos, setCurrentPos] = useState<[number, number]>([6.2748, -75.5544]);
@@ -91,6 +94,17 @@ export default function RecordRoute() {
     };
   }, []);
 
+  // Close bus dropdown on outside click
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (busInputRef.current && !busInputRef.current.closest('.relative')?.contains(e.target as Node)) {
+        setShowBusDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, []);
+
   const formatTime = (secs: number) => {
     const m = Math.floor(secs / 60);
     const s = secs % 60;
@@ -157,19 +171,69 @@ export default function RecordRoute() {
                 Selecciona el bus en el que estás y presiona grabar. El tiempo solo contará cuando estés en movimiento.
               </p>
 
-              {/* Bus selector */}
-              <div>
+              <div className="relative">
                 <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Bus / Línea</label>
-                <select
-                  value={selectedBus}
-                  onChange={e => setSelectedBus(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-muted border-0 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
-                >
-                  <option value="">Seleccionar bus...</option>
-                  {busRoutes.map(r => (
-                    <option key={r.id} value={r.code}>{r.code} — {r.name} ({r.company})</option>
-                  ))}
-                </select>
+                <div className="relative">
+                  <input
+                    ref={busInputRef}
+                    type="text"
+                    value={busInputValue}
+                    placeholder="Escribe o selecciona un bus..."
+                    onChange={e => {
+                      setBusInputValue(e.target.value);
+                      setSelectedBus(e.target.value);
+                      setShowBusDropdown(true);
+                    }}
+                    onFocus={() => setShowBusDropdown(true)}
+                    className="w-full px-4 py-3 pr-10 rounded-xl bg-muted border-0 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowBusDropdown(prev => !prev)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                  >
+                    <ChevronDown size={16} />
+                  </button>
+                </div>
+
+                {showBusDropdown && (
+                  <div className="absolute left-0 right-0 mt-1 max-h-48 overflow-y-auto rounded-xl bg-card border border-border shadow-lg z-50">
+                    {busRoutes
+                      .filter(r =>
+                        !busInputValue ||
+                        r.code.toLowerCase().includes(busInputValue.toLowerCase()) ||
+                        r.name.toLowerCase().includes(busInputValue.toLowerCase())
+                      )
+                      .map(r => (
+                        <button
+                          key={r.id}
+                          type="button"
+                          onClick={() => {
+                            setSelectedBus(r.code);
+                            setBusInputValue(`${r.code} — ${r.name}`);
+                            setShowBusDropdown(false);
+                          }}
+                          className="w-full text-left px-4 py-2.5 text-sm text-foreground hover:bg-muted transition-colors first:rounded-t-xl last:rounded-b-xl"
+                        >
+                          <span className="font-semibold">{r.code}</span>
+                          <span className="text-muted-foreground"> — {r.name} ({r.company})</span>
+                        </button>
+                      ))
+                    }
+                    {busInputValue && !busRoutes.some(r => r.code.toLowerCase() === busInputValue.toLowerCase()) && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSelectedBus(busInputValue);
+                          setShowBusDropdown(false);
+                        }}
+                        className="w-full text-left px-4 py-2.5 text-sm text-primary font-medium hover:bg-muted transition-colors border-t border-border"
+                      >
+                        + Agregar "<span className="font-semibold">{busInputValue}</span>" como bus nuevo
+                      </button>
+                    )}
+                  </div>
+                )}
               </div>
 
               {/* Direction */}
