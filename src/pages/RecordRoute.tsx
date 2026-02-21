@@ -269,7 +269,7 @@ export default function RecordRoute() {
           {status === 'recording' &&
           <motion.div key="recording" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-4">
               {/* Stats */}
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-2 gap-2">
                 <div className="glass-card p-3 text-center">
                   <Clock size={16} className="text-primary mx-auto mb-1" />
                   <p className="text-lg font-bold font-mono text-foreground">{formatTime(movingTime)}</p>
@@ -277,19 +277,19 @@ export default function RecordRoute() {
                 </div>
                 <div className="glass-card p-3 text-center">
                   <Navigation size={16} className="text-transit-blue mx-auto mb-1" />
-                  <p className="text-lg font-bold text-foreground">{(distance / 1000).toFixed(1)}</p>
+                  <p className="text-lg font-bold text-foreground text-center">{(distance / 1000).toFixed(1)}</p>
                   <p className="text-[10px] text-muted-foreground">km</p>
                 </div>
-                <div className="glass-card p-3 text-center">
-                  <MapPin size={16} className="text-accent mx-auto mb-1" />
-                  <p className="text-lg font-bold text-foreground">{path.length}</p>
-                  <p className="text-[10px] text-muted-foreground">Puntos GPS</p>
-                </div>
+                
+
+
+
+
               </div>
 
               <button
               onClick={stopRecording}
-              className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-destructive text-destructive-foreground font-semibold">
+              className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-destructive text-destructive-foreground font-semibold my-[60px]">
 
                 <Square size={18} /> Detener y guardar
               </button>
