@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+
 
 @layer base {
   :root {
@@ -125,7 +125,7 @@
   }
 
   .map-container {
-    @apply w-full h-full rounded-xl overflow-hidden;
+    @apply w-full h-full overflow-hidden;
   }
 
   .route-line {
