@@ -46,7 +46,8 @@ function MapViewInner({
     if (!containerRef.current || initRef.current) return;
     initRef.current = true;
 
-    const map = L.map(containerRef.current, { zoomControl: false }).setView(center, zoom);
+    const container = containerRef.current;
+    const map = L.map(container, { zoomControl: false }).setView(center, zoom);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap',
     }).addTo(map);
@@ -54,9 +55,16 @@ function MapViewInner({
     mapRef.current = map;
     layersRef.current = L.layerGroup().addTo(map);
 
-    setTimeout(() => map.invalidateSize(), 100);
+    // Watch for container size changes
+    const observer = new ResizeObserver(() => {
+      map.invalidateSize();
+    });
+    observer.observe(container);
+
+    setTimeout(() => map.invalidateSize(), 200);
 
     return () => {
+      observer.disconnect();
       map.remove();
       mapRef.current = null;
       initRef.current = false;

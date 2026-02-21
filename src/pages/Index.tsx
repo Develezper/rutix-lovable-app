@@ -47,7 +47,7 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col pb-20">
       {/* Map background */}
-      <div className="relative h-[45vh] w-full">
+      <div className="relative h-[45vh] w-full overflow-hidden">
         <MapView
           center={[6.2518, -75.5636]}
           zoom={12}
