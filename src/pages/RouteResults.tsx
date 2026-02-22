@@ -1,10 +1,11 @@
 import { useState, useMemo } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronDown } from 'lucide-react';
+import { ArrowLeft, ChevronDown, Navigation } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MapView from '@/components/MapView';
 import RouteCard from '@/components/RouteCard';
 import RouteDetails from '@/components/RouteDetails';
+import NavigationView from '@/components/NavigationView';
 import { getRouteResults } from '@/data/mockData';
 
 export default function RouteResults() {
@@ -15,6 +16,7 @@ export default function RouteResults() {
   const routes = useMemo(() => getRouteResults(from, to), [from, to]);
   const [selectedIdx, setSelectedIdx] = useState(0);
   const [showDetails, setShowDetails] = useState(false);
+  const [navigating, setNavigating] = useState(false);
 
   const selected = routes[selectedIdx];
 
@@ -28,6 +30,18 @@ export default function RouteResults() {
     { position: selected.segments[0].from.lat ? [selected.segments[0].from.lat, selected.segments[0].from.lng] as [number, number] : [6.25, -75.56] as [number, number], label: from, color: '#10b981' },
     { position: selected.segments[selected.segments.length - 1].to.lat ? [selected.segments[selected.segments.length - 1].to.lat, selected.segments[selected.segments.length - 1].to.lng] as [number, number] : [6.33, -75.55] as [number, number], label: to, color: '#ef4444' },
   ] : [];
+
+  // Navigation mode
+  if (navigating && selected) {
+    return (
+      <NavigationView
+        route={selected}
+        from={from}
+        to={to}
+        onExit={() => setNavigating(false)}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col pb-20">
@@ -85,6 +99,18 @@ export default function RouteResults() {
             />
           ))}
         </div>
+
+        {/* Navigate button */}
+        {showDetails && selected && (
+          <motion.button
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            onClick={() => setNavigating(true)}
+            className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-green-500 text-white font-semibold mb-4 transition-all hover:bg-green-600"
+          >
+            <Navigation size={18} /> Iniciar navegación GPS
+          </motion.button>
+        )}
 
         {/* Route details */}
         <AnimatePresence>
