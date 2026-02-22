@@ -186,7 +186,7 @@ export default function RecordRoute() {
                     setShowBusDropdown(true);
                   }}
                   onFocus={() => setShowBusDropdown(true)}
-                  className="w-full px-4 py-3 pr-10 rounded-xl bg-muted border-0 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" />
+                  className="w-full px-4 py-3 pr-10 rounded-xl bg-muted border-0 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 my-[5px]" />
 
                   <button
                   type="button"
