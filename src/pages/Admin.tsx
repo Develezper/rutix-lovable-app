@@ -9,7 +9,7 @@ export default function AdminPage() {
   const [filterBus, setFilterBus] = useState('');
   const [filterStatus, setFilterStatus] = useState('');
 
-  const filteredTraces = recordedTraces.filter(t => {
+  const filteredTraces = recordedTraces.filter((t) => {
     if (filterBus && t.busCode !== filterBus) return false;
     if (filterStatus && t.status !== filterStatus) return false;
     return true;
@@ -26,23 +26,23 @@ export default function AdminPage() {
       {/* Tabs */}
       <div className="px-4 mb-4">
         <div className="flex gap-1 bg-muted rounded-xl p-1">
-          {(['overview', 'routes', 'traces'] as const).map(tab => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`flex-1 py-2 text-xs font-medium rounded-lg transition-all ${
-                activeTab === tab ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground'
-              }`}
-            >
+          {(['overview', 'routes', 'traces'] as const).map((tab) =>
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`flex-1 py-2 text-xs font-medium rounded-lg transition-all ${
+            activeTab === tab ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground'}`
+            }>
+
               {tab === 'overview' ? 'General' : tab === 'routes' ? 'Rutas' : 'Trazas GPS'}
             </button>
-          ))}
+          )}
         </div>
       </div>
 
       {/* Overview tab */}
-      {activeTab === 'overview' && (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="px-4 space-y-4">
+      {activeTab === 'overview' &&
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="px-4 space-y-4">
           {/* Stats grid */}
           <div className="grid grid-cols-2 gap-3">
             <div className="glass-card p-4">
@@ -78,16 +78,16 @@ export default function AdminPage() {
             </div>
             <div className="h-[250px]">
               <MapView
-                center={[6.25, -75.57]}
-                zoom={11}
-                segments={busRoutes.filter(r => r.status === 'validated').map(r => ({
-                  path: r.stops.map(sid => {
-                    const s = busStops.find(st => st.id === sid);
-                    return s ? [s.lat, s.lng] as [number, number] : [6.25, -75.56] as [number, number];
-                  }),
-                  color: r.color,
-                }))}
-              />
+              center={[6.25, -75.57]}
+              zoom={11}
+              segments={busRoutes.filter((r) => r.status === 'validated').map((r) => ({
+                path: r.stops.map((sid) => {
+                  const s = busStops.find((st) => st.id === sid);
+                  return s ? [s.lat, s.lng] as [number, number] : [6.25, -75.56] as [number, number];
+                }),
+                color: r.color
+              }))} />
+
             </div>
           </div>
 
@@ -95,37 +95,37 @@ export default function AdminPage() {
           <div className="glass-card p-4">
             <h3 className="text-sm font-semibold text-foreground mb-3">Zonas con datos</h3>
             <div className="flex flex-wrap gap-2 mb-3">
-              {adminStats.zonesWithData.map(z => (
-                <span key={z} className="transit-badge bg-primary/10 text-primary">{z}</span>
-              ))}
+              {adminStats.zonesWithData.map((z) =>
+            <span key={z} className="transit-badge bg-primary/10 text-primary">{z}</span>
+            )}
             </div>
             <h3 className="text-sm font-semibold text-foreground mb-2">Zonas sin cobertura</h3>
             <div className="flex flex-wrap gap-2">
-              {adminStats.zonesNeedingData.map(z => (
-                <span key={z} className="transit-badge bg-accent/15 text-accent">{z}</span>
-              ))}
+              {adminStats.zonesNeedingData.map((z) =>
+            <span key={z} className="transit-badge bg-red-200 text-red-500">{z}</span>
+            )}
             </div>
           </div>
         </motion.div>
-      )}
+      }
 
       {/* Routes tab */}
-      {activeTab === 'routes' && (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="px-4 space-y-3">
-          {busRoutes.map((route, i) => (
-            <div key={route.id} className="glass-card p-4">
+      {activeTab === 'routes' &&
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="px-4 space-y-3">
+          {busRoutes.map((route, i) =>
+        <div key={route.id} className="glass-card p-4">
               <div className="flex items-start justify-between mb-2">
                 <div className="flex items-center gap-2">
                   <span className="transit-badge text-primary-foreground" style={{ backgroundColor: route.color }}>
                     <Bus size={10} /> {route.code}
                   </span>
                   <span className={`transit-badge ${
-                    route.status === 'validated' ? 'bg-primary/15 text-primary' :
-                    route.status === 'candidate' ? 'bg-accent/15 text-accent' :
-                    'bg-muted text-muted-foreground'
-                  }`}>
+              route.status === 'validated' ? 'bg-primary/15 text-primary' :
+              route.status === 'candidate' ? 'bg-accent/15 text-accent' :
+              'bg-muted text-muted-foreground'}`
+              }>
                     {route.status === 'validated' ? '✓ Validada' :
-                     route.status === 'candidate' ? '⏳ Candidata' : '⬜ Pendiente'}
+                route.status === 'candidate' ? '⏳ Candidata' : '⬜ Pendiente'}
                   </span>
                 </div>
                 <span className="text-xs text-muted-foreground">{route.company}</span>
@@ -143,38 +143,38 @@ export default function AdminPage() {
                 </span>
                 <span>{route.stops.length} paradas</span>
               </div>
-              {route.mappedBy >= 30 && route.status !== 'validated' && (
-                <div className="mt-2 p-2 rounded-lg bg-primary/10 border border-primary/20">
+              {route.mappedBy >= 30 && route.status !== 'validated' &&
+          <div className="mt-2 p-2 rounded-lg bg-primary/10 border border-primary/20">
                   <p className="text-xs text-primary font-medium">
                     ✅ {route.mappedBy} mapeos · Cumple umbral de validación (≥30)
                   </p>
                 </div>
-              )}
+          }
             </div>
-          ))}
+        )}
         </motion.div>
-      )}
+      }
 
       {/* Traces tab */}
-      {activeTab === 'traces' && (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="px-4 space-y-4">
+      {activeTab === 'traces' &&
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="px-4 space-y-4">
           {/* Filters */}
           <div className="flex gap-2">
             <select
-              value={filterBus}
-              onChange={e => setFilterBus(e.target.value)}
-              className="flex-1 px-3 py-2 rounded-lg bg-muted text-sm text-foreground"
-            >
+            value={filterBus}
+            onChange={(e) => setFilterBus(e.target.value)}
+            className="flex-1 px-3 py-2 rounded-lg bg-muted text-sm text-foreground">
+
               <option value="">Todos los buses</option>
-              {busRoutes.map(r => (
-                <option key={r.id} value={r.code}>{r.code}</option>
-              ))}
+              {busRoutes.map((r) =>
+            <option key={r.id} value={r.code}>{r.code}</option>
+            )}
             </select>
             <select
-              value={filterStatus}
-              onChange={e => setFilterStatus(e.target.value)}
-              className="flex-1 px-3 py-2 rounded-lg bg-muted text-sm text-foreground"
-            >
+            value={filterStatus}
+            onChange={(e) => setFilterStatus(e.target.value)}
+            className="flex-1 px-3 py-2 rounded-lg bg-muted text-sm text-foreground">
+
               <option value="">Todos los estados</option>
               <option value="pending">Pendiente</option>
               <option value="processed">Procesada</option>
@@ -184,20 +184,20 @@ export default function AdminPage() {
 
           <p className="text-xs text-muted-foreground">{filteredTraces.length} trazas</p>
 
-          {filteredTraces.map((trace, i) => (
-            <div key={trace.id} className="glass-card p-4">
+          {filteredTraces.map((trace, i) =>
+        <div key={trace.id} className="glass-card p-4">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                   <span className="transit-badge bg-primary/10 text-primary">
                     <Bus size={10} /> {trace.busCode}
                   </span>
                   <span className={`transit-badge ${
-                    trace.status === 'validated' ? 'bg-primary/15 text-primary' :
-                    trace.status === 'processed' ? 'bg-transit-blue/15 text-transit-blue' :
-                    'bg-muted text-muted-foreground'
-                  }`}>
+              trace.status === 'validated' ? 'bg-primary/15 text-primary' :
+              trace.status === 'processed' ? 'bg-transit-blue/15 text-transit-blue' :
+              'bg-muted text-muted-foreground'}`
+              }>
                     {trace.status === 'validated' ? '✓ Validada' :
-                     trace.status === 'processed' ? '⚙️ Procesada' : '⏳ Pendiente'}
+                trace.status === 'processed' ? '⚙️ Procesada' : '⏳ Pendiente'}
                   </span>
                 </div>
                 <span className="text-xs text-muted-foreground">{trace.date}</span>
@@ -209,9 +209,9 @@ export default function AdminPage() {
                 <span>{trace.points} puntos</span>
               </div>
             </div>
-          ))}
+        )}
         </motion.div>
-      )}
-    </div>
-  );
+      }
+    </div>);
+
 }
