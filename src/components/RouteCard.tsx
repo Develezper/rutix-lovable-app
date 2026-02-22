@@ -71,7 +71,7 @@ export default function RouteCard({ route, index, selected, onClick }: RouteCard
           <ArrowRightLeft size={12} /> {route.transfers} transbordo{route.transfers !== 1 ? 's' : ''}
         </span>
         <span className="flex items-center gap-1">
-          <Star size={12} className="fill-current text-amber-400 bg-primary" /> {route.confidence}%
+          <Star size={12} className="fill-current text-amber-400 bg-transparent" /> {route.confidence}%
         </span>
       </div>
     </motion.button>);
