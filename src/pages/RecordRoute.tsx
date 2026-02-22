@@ -23,6 +23,7 @@ export default function RecordRoute() {
   const [busInputValue, setBusInputValue] = useState('');
   const [showBusDropdown, setShowBusDropdown] = useState(false);
   const busInputRef = useRef<HTMLInputElement>(null);
+  const busWrapperRef = useRef<HTMLDivElement>(null);
   const [direction, setDirection] = useState('ida');
   const [path, setPath] = useState<[number, number][]>([]);
   const [currentPos, setCurrentPos] = useState<[number, number]>([6.2748, -75.5544]);
@@ -97,7 +98,7 @@ export default function RecordRoute() {
   // Close bus dropdown on outside click
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
-      if (busInputRef.current && !busInputRef.current.closest('.relative')?.contains(e.target as Node)) {
+      if (busWrapperRef.current && !busWrapperRef.current.contains(e.target as Node)) {
         setShowBusDropdown(false);
       }
     };
@@ -171,7 +172,7 @@ export default function RecordRoute() {
                 Selecciona el bus en el que estás y presiona grabar. El tiempo solo contará cuando estés en movimiento.
               </p>
 
-              <div className="relative">
+              <div className="relative" ref={busWrapperRef}>
                 <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Bus / Línea</label>
                 <div className="relative">
                   <input
