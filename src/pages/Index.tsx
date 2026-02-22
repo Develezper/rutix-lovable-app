@@ -27,22 +27,22 @@ const Index = () => {
   };
 
   const markers = [
-    ...(originCoords ? [{ position: originCoords, label: origin, color: '#10b981' }] : []),
-    ...(destCoords ? [{ position: destCoords, label: destination, color: '#ef4444' }] : []),
-  ] as any[];
+  ...(originCoords ? [{ position: originCoords, label: origin, color: '#10b981' }] : []),
+  ...(destCoords ? [{ position: destCoords, label: destination, color: '#ef4444' }] : [])] as
+  any[];
 
   // Show some validated route stops on map
-  const mapSegments = useMemo(() => busRoutes
-    .filter(r => r.status === 'validated')
-    .slice(0, 4)
-    .map(route => ({
-      path: route.stops.map(sid => {
-        const stop = busStops.find(s => s.id === sid);
-        return stop ? [stop.lat, stop.lng] as [number, number] : [6.25, -75.56] as [number, number];
-      }),
-      color: route.color + '40',
-      dashed: false,
-    })), []);
+  const mapSegments = useMemo(() => busRoutes.
+  filter((r) => r.status === 'validated').
+  slice(0, 4).
+  map((route) => ({
+    path: route.stops.map((sid) => {
+      const stop = busStops.find((s) => s.id === sid);
+      return stop ? [stop.lat, stop.lng] as [number, number] : [6.25, -75.56] as [number, number];
+    }),
+    color: route.color + '40',
+    dashed: false
+  })), []);
 
   return (
     <div className="min-h-screen flex flex-col pb-20">
@@ -53,8 +53,8 @@ const Index = () => {
           zoom={12}
           segments={mapSegments}
           markers={markers}
-          className="h-full"
-        />
+          className="h-full" />
+
 
         {/* Logo overlay */}
         <div className="absolute top-4 left-4 right-4 z-[1000]">
@@ -74,8 +74,8 @@ const Index = () => {
       <motion.div
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="relative -mt-8 mx-4 z-[1000]"
-      >
+        className="relative -mt-8 mx-4 z-[1000]">
+
         <div className="glass-card p-4 space-y-3">
           <div className="flex gap-2">
             <div className="flex-1 space-y-2">
@@ -83,21 +83,21 @@ const Index = () => {
                 placeholder="¿Dónde estás?"
                 value={origin}
                 onChange={setOrigin}
-                onSelect={p => setOriginCoords([p.lat, p.lng])}
-                icon="origin"
-              />
+                onSelect={(p) => setOriginCoords([p.lat, p.lng])}
+                icon="origin" />
+
               <SearchBar
                 placeholder="¿A dónde vas?"
                 value={destination}
                 onChange={setDestination}
-                onSelect={p => setDestCoords([p.lat, p.lng])}
-                icon="destination"
-              />
+                onSelect={(p) => setDestCoords([p.lat, p.lng])}
+                icon="destination" />
+
             </div>
             <button
               onClick={swapLocations}
-              className="self-center p-2 rounded-lg bg-muted hover:bg-muted/80 transition-colors text-muted-foreground"
-            >
+              className="self-center p-2 rounded-lg bg-muted hover:bg-muted/80 transition-colors text-muted-foreground">
+
               <ArrowDownUp size={18} />
             </button>
           </div>
@@ -105,8 +105,8 @@ const Index = () => {
           <button
             onClick={handleSearch}
             disabled={!origin || !destination}
-            className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm transition-all hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
-          >
+            className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm transition-all hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed">
+
             Buscar ruta
           </button>
         </div>
@@ -117,18 +117,18 @@ const Index = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
-        className="grid grid-cols-3 gap-3 mx-4 mt-6"
-      >
+        className="grid grid-cols-2 gap-3 mx-4 mt-6">
+
         <div className="glass-card p-3 text-center">
           <Route size={18} className="text-primary mx-auto mb-1" />
           <p className="text-lg font-bold text-foreground">{adminStats.validatedRoutes}</p>
           <p className="text-[10px] text-muted-foreground">Rutas activas</p>
         </div>
-        <div className="glass-card p-3 text-center">
-          <Users size={18} className="text-accent mx-auto mb-1" />
-          <p className="text-lg font-bold text-foreground">{adminStats.totalUsers.toLocaleString()}</p>
-          <p className="text-[10px] text-muted-foreground">Usuarios</p>
-        </div>
+        
+
+
+
+
         <div className="glass-card p-3 text-center">
           <TrendingUp size={18} className="text-transit-blue mx-auto mb-1" />
           <p className="text-lg font-bold text-foreground">{adminStats.coveragePercent}%</p>
@@ -141,19 +141,19 @@ const Index = () => {
         <h2 className="text-sm font-semibold text-foreground mb-3">Rutas populares</h2>
         <div className="space-y-2">
           {[
-            { from: 'Parque de Aranjuez', to: 'Parque de Bello', time: '35 min', bus: '301A' },
-            { from: 'Estación Poblado', to: 'Parque Envigado', time: '22 min', bus: '125' },
-            { from: 'Centro (Berrío)', to: 'Laureles', time: '18 min', bus: 'C6' },
-          ].map((r, i) => (
-            <button
-              key={i}
-              onClick={() => {
-                setOrigin(r.from);
-                setDestination(r.to);
-                navigate(`/results?from=${encodeURIComponent(r.from)}&to=${encodeURIComponent(r.to)}`);
-              }}
-              className="w-full flex items-center gap-3 p-3 rounded-xl bg-card border border-border hover:border-primary/30 transition-all text-left"
-            >
+          { from: 'Parque de Aranjuez', to: 'Parque de Bello', time: '35 min', bus: '301A' },
+          { from: 'Estación Poblado', to: 'Parque Envigado', time: '22 min', bus: '125' },
+          { from: 'Centro (Berrío)', to: 'Laureles', time: '18 min', bus: 'C6' }].
+          map((r, i) =>
+          <button
+            key={i}
+            onClick={() => {
+              setOrigin(r.from);
+              setDestination(r.to);
+              navigate(`/results?from=${encodeURIComponent(r.from)}&to=${encodeURIComponent(r.to)}`);
+            }}
+            className="w-full flex items-center gap-3 p-3 rounded-xl bg-card border border-border hover:border-primary/30 transition-all text-left">
+
               <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
                 <MapPin size={14} className="text-primary" />
               </div>
@@ -162,7 +162,7 @@ const Index = () => {
                 <p className="text-xs text-muted-foreground">~{r.time} · Bus {r.bus}</p>
               </div>
             </button>
-          ))}
+          )}
         </div>
       </div>
 
@@ -170,15 +170,15 @@ const Index = () => {
       <div className="mx-4 mt-6 mb-4">
         <h2 className="text-sm font-semibold text-foreground mb-2">📍 Zonas sin cobertura — ¡Ayúdanos!</h2>
         <div className="flex flex-wrap gap-2">
-          {adminStats.zonesNeedingData.map(zone => (
-            <span key={zone} className="transit-badge bg-accent/15 text-accent text-xs">
+          {adminStats.zonesNeedingData.map((zone) =>
+          <span key={zone} className="transit-badge text-xs text-popover bg-red-600">
               {zone}
             </span>
-          ))}
+          )}
         </div>
       </div>
-    </div>
-  );
+    </div>);
+
 };
 
 export default Index;
