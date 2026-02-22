@@ -171,7 +171,7 @@ const Index = () => {
         <h2 className="text-sm font-semibold text-foreground mb-2">📍 Zonas sin cobertura — ¡Ayúdanos!</h2>
         <div className="flex flex-wrap gap-2">
           {adminStats.zonesNeedingData.map((zone) =>
-          <span key={zone} className="transit-badge text-xs text-popover bg-red-600">
+          <span key={zone} className="transit-badge text-xs bg-red-200 text-red-500">
               {zone}
             </span>
           )}
