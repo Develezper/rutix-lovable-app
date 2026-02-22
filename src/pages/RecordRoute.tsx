@@ -242,19 +242,19 @@ export default function RecordRoute() {
                 <label className="text-xs font-medium text-muted-foreground mb-1.5 block">
               </label>
                 <div className="flex gap-2">
-                  {['ida', 'vuelta'].map((d) => (
-                    <button
-                      key={d}
-                      type="button"
-                      onClick={() => setDirection(d)}
-                      className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-all ${
-                        direction === d
-                          ? 'bg-primary text-primary-foreground'
-                          : 'bg-muted text-muted-foreground'
-                      }`}>
-                      {d === 'ida' ? '→ Ida' : '← Vuelta'}
-                    </button>
-                  ))}
+                  {['ida', 'vuelta'].map((d) => {}
+
+
+
+
+
+
+
+
+
+
+
+                )}
                 </div>
               </div>
 
