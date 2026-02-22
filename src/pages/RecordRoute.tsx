@@ -241,25 +241,26 @@ export default function RecordRoute() {
                 <label className="text-xs font-medium text-muted-foreground mb-1.5 block">
               </label>
                 <div className="flex gap-2">
-                  {['ida', 'vuelta'].map((d) => {}
-
-
-
-
-
-
-
-
-
-
-                )}
+                  {['ida', 'vuelta'].map((d) => (
+                    <button
+                      key={d}
+                      type="button"
+                      onClick={() => setDirection(d)}
+                      className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                        direction === d
+                          ? 'bg-primary text-primary-foreground'
+                          : 'bg-muted text-muted-foreground'
+                      }`}>
+                      {d === 'ida' ? '→ Ida' : '← Vuelta'}
+                    </button>
+                  ))}
                 </div>
               </div>
 
               <button
               onClick={startRecording}
               disabled={!selectedBus}
-              className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-primary text-primary-foreground font-semibold transition-all hover:opacity-90 disabled:opacity-40">
+              className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold transition-all hover:opacity-90 disabled:opacity-40 ${selectedBus ? 'bg-green-500 text-white' : 'bg-primary text-primary-foreground'}`}>
 
                 <Play size={18} /> Iniciar grabación
               </button>
