@@ -24,11 +24,11 @@ export default function RecordRoute() {
   const [showBusDropdown, setShowBusDropdown] = useState(false);
   const busInputRef = useRef<HTMLInputElement>(null);
   const busWrapperRef = useRef<HTMLDivElement>(null);
-  const [direction, setDirection] = useState('ida');
   const [path, setPath] = useState<[number, number][]>([]);
   const [currentPos, setCurrentPos] = useState<[number, number]>([6.2748, -75.5544]);
   const [movingTime, setMovingTime] = useState(0);
   const [distance, setDistance] = useState(0);
+  const [estimatedTotalTime, setEstimatedTotalTime] = useState(0);
   const simIndex = useRef(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -45,6 +45,16 @@ export default function RecordRoute() {
     simIndex.current = 0;
     setMovingTime(0);
     setDistance(0);
+
+    // Calculate total route distance and estimated time (avg bus speed ~25 km/h)
+    let totalDist = 0;
+    for (let i = 1; i < simulatedPath.length; i++) {
+      const dLat = (simulatedPath[i][0] - simulatedPath[i-1][0]) * 111320;
+      const dLng = (simulatedPath[i][1] - simulatedPath[i-1][1]) * 111320 * Math.cos(simulatedPath[i-1][0] * Math.PI / 180);
+      totalDist += Math.sqrt(dLat * dLat + dLng * dLng);
+    }
+    const totalTimeSeconds = Math.ceil((totalDist / 1000) / 25 * 3600); // distance in km / speed km/h * 3600
+    setEstimatedTotalTime(totalTimeSeconds);
 
     // Simulate GPS movement
     intervalRef.current = setInterval(() => {
@@ -144,8 +154,8 @@ export default function RecordRoute() {
               <div className="flex-1">
                 <p className="text-sm font-semibold text-foreground">Grabando ruta</p>
                 <p className="text-xs text-muted-foreground">
-                  Bus {selectedBus} · {direction === 'ida' ? 'Ida' : 'Vuelta'}
-                </p>
+                   Bus {selectedBus}
+                 </p>
               </div>
               <div className="text-right">
                 <p className="text-sm font-mono font-bold text-foreground">{formatTime(movingTime)}</p>
@@ -237,24 +247,6 @@ export default function RecordRoute() {
               }
               </div>
 
-              {/* Direction */}
-              <div>
-                <label className="text-xs font-medium text-muted-foreground mb-1.5 block">
-              </label>
-                <div className="flex gap-2">
-                  {['ida', 'vuelta'].map((d) => (
-                    <button
-                      key={d}
-                      type="button"
-                      onClick={() => setDirection(d)}
-                      className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-all ${direction === d ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'}`}
-                    >
-                      {d === 'ida' ? '➡️ Ida' : '⬅️ Vuelta'}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
               <button
               onClick={startRecording}
               disabled={!selectedBus}
@@ -271,8 +263,8 @@ export default function RecordRoute() {
               <div className="grid grid-cols-2 gap-2">
                 <div className="glass-card p-3 text-center">
                   <Clock size={16} className="text-primary mx-auto mb-1" />
-                  <p className="text-lg font-bold font-mono text-foreground">{formatTime(movingTime)}</p>
-                  <p className="text-[10px] text-muted-foreground">Tiempo est. llegada</p>
+                  <p className="text-lg font-bold font-mono text-foreground">{formatTime(Math.max(0, estimatedTotalTime - movingTime))}</p>
+                   <p className="text-[10px] text-muted-foreground">Tiempo est. llegada</p>
                 </div>
                 <div className="glass-card p-3 text-center">
                   <Navigation size={16} className="text-transit-blue mx-auto mb-1" />
