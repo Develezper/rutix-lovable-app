@@ -72,9 +72,7 @@ export default function RouteResults() {
       </div>
 
       {/* Results panel */}
-      <motion.div
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
+      <div
         className="relative -mt-6 flex-1 bg-background rounded-t-2xl z-[1000] px-4 pt-5"
       >
         <div className="flex items-center justify-between mb-4">
@@ -133,7 +131,7 @@ export default function RouteResults() {
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.div>
+      </div>
     </div>
   );
 }

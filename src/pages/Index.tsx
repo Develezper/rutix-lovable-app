@@ -1,6 +1,5 @@
 import { useState, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { Bus, ArrowDownUp, MapPin, Users, Route, TrendingUp } from 'lucide-react';
 import SearchBar from '@/components/SearchBar';
 import MapView from '@/components/MapView';
@@ -40,7 +39,7 @@ const Index = () => {
       const stop = busStops.find((s) => s.id === sid);
       return stop ? [stop.lat, stop.lng] as [number, number] : [6.25, -75.56] as [number, number];
     }),
-    color: route.color + '40',
+    color: route.color,
     dashed: false
   })), []);
 
@@ -71,9 +70,7 @@ const Index = () => {
       </div>
 
       {/* Search panel */}
-      <motion.div
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
+      <div
         className="relative -mt-8 mx-4 z-[1000]">
 
         <div className="glass-card p-4 space-y-3">
@@ -110,13 +107,10 @@ const Index = () => {
             Buscar ruta
           </button>
         </div>
-      </motion.div>
+      </div>
 
       {/* Stats */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
+      <div
         className="grid grid-cols-2 gap-3 mx-4 mt-6">
 
         <div className="glass-card p-3 text-center">
@@ -134,7 +128,7 @@ const Index = () => {
           <p className="text-lg font-bold text-foreground">{adminStats.coveragePercent}%</p>
           <p className="text-[10px] text-muted-foreground">Cobertura</p>
         </div>
-      </motion.div>
+      </div>
 
       {/* Quick routes */}
       <div className="mx-4 mt-6">
