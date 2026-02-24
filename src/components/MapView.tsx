@@ -61,7 +61,10 @@ function MapViewInner({
     });
     observer.observe(container);
 
-    setTimeout(() => map.invalidateSize(), 200);
+    // Multiple invalidateSize calls to handle late layout
+    setTimeout(() => map.invalidateSize(), 100);
+    setTimeout(() => map.invalidateSize(), 300);
+    setTimeout(() => map.invalidateSize(), 600);
 
     return () => {
       observer.disconnect();
