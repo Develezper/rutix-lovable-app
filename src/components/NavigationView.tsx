@@ -53,7 +53,7 @@ function interpolatePath(path: [number, number][], totalSteps: number): [number,
 export default function NavigationView({ route, from, to, onExit }: NavigationViewProps) {
   const [currentSegIdx, setCurrentSegIdx] = useState(0);
   const [positionIdx, setPositionIdx] = useState(0);
-  const [started, setStarted] = useState(false);
+  const [started, setStarted] = useState(true);
   const [arrived, setArrived] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -125,8 +125,8 @@ export default function NavigationView({ route, from, to, onExit }: NavigationVi
     return markers;
   }, [route, from, to]);
 
-  // Start/stop simulation
-  const startNavigation = useCallback(() => {
+  // Auto-start on mount
+  useEffect(() => {
     setStarted(true);
     setCurrentSegIdx(0);
     setPositionIdx(0);
@@ -185,14 +185,14 @@ export default function NavigationView({ route, from, to, onExit }: NavigationVi
   return (
     <div className="min-h-screen flex flex-col">
       {/* Full screen map */}
-      <div className="relative flex-1 min-h-[60vh]">
+      <div className="relative h-[60vh]">
         <MapView
           center={currentPosition}
-          zoom={started ? 16 : 13}
+          zoom={16}
           segments={mapSegments}
           markers={mapMarkers}
-          currentPosition={started ? currentPosition : undefined}
-          followPosition={started}
+          currentPosition={currentPosition}
+          followPosition={true}
         />
 
         {/* Back button */}
@@ -261,49 +261,7 @@ export default function NavigationView({ route, from, to, onExit }: NavigationVi
         animate={{ y: 0, opacity: 1 }}
         className="relative -mt-6 bg-background rounded-t-2xl z-[1000] px-4 pt-5 pb-24"
       >
-        {!started ? (
-          /* Pre-navigation: show route summary and start button */
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-base font-bold text-foreground">Navegación GPS</h2>
-              <span className="text-xs text-muted-foreground flex items-center gap-1">
-                <Clock size={12} /> {route.totalTime} min · {route.transfers} transbordo{route.transfers !== 1 ? 's' : ''}
-              </span>
-            </div>
-
-            <p className="text-sm text-muted-foreground">
-              {from} → {to}
-            </p>
-
-            {/* Segment summary */}
-            <div className="flex items-center gap-1.5 flex-wrap">
-              {route.segments.map((seg, i) => (
-                <div key={i} className="flex items-center gap-1">
-                  {i > 0 && <ChevronRight size={12} className="text-muted-foreground" />}
-                  {seg.type === 'bus' ? (
-                    <span
-                      className="transit-badge text-primary-foreground text-xs"
-                      style={{ backgroundColor: seg.busRoute?.color }}
-                    >
-                      🚌 {seg.busRoute?.code}
-                    </span>
-                  ) : (
-                    <span className="transit-badge bg-muted text-muted-foreground text-xs">
-                      🚶 {seg.duration}min
-                    </span>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            <button
-              onClick={startNavigation}
-              className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-green-500 text-white font-semibold transition-all hover:bg-green-600"
-            >
-              <Navigation size={18} /> Iniciar navegación
-            </button>
-          </div>
-        ) : !arrived ? (
+        {!arrived ? (
           /* During navigation: current step + next */
           <div className="space-y-3">
             {/* Progress bar */}
