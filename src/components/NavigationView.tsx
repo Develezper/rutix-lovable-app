@@ -97,10 +97,10 @@ export default function NavigationView({ route, from, to, onExit }: NavigationVi
     return route.segments.map((seg, i) => ({
       path: seg.path,
       color: i < currentSegIdx 
-        ? '#9ca3af' // completed = gray
+        ? '#9ca3af'
         : i === currentSegIdx 
           ? (seg.type === 'bus' ? (seg.busRoute?.color || '#3b82f6') : '#10b981')
-          : (seg.type === 'bus' ? (seg.busRoute?.color || '#3b82f6') + '60' : '#9ca3af40'),
+          : (seg.type === 'bus' ? (seg.busRoute?.color || '#93bbf5') : '#d1d5db'),
       dashed: seg.type === 'walk',
     }));
   }, [route, currentSegIdx]);
