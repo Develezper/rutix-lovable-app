@@ -26,24 +26,24 @@ export default function HistoryDetail() {
 
     // Draw route polyline
     const polyline = L.polyline(route.path.map(p => [p[0], p[1]] as L.LatLngExpression), {
-      color: 'hsl(152, 60%, 40%)',
-      weight: 4,
-      opacity: 0.85,
+      color: 'hsl(142, 76%, 36%)',
+      weight: 5,
+      opacity: 0.9,
     }).addTo(map);
 
     // Origin marker
     const originIcon = L.divIcon({
-      html: `<div style="width:12px;height:12px;background:hsl(152,60%,40%);border:2px solid white;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,0.2);"></div>`,
-      iconSize: [12, 12],
-      iconAnchor: [6, 6],
+      html: `<div style="width:14px;height:14px;background:hsl(142,76%,36%);border:3px solid white;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,0.3);"></div>`,
+      iconSize: [14, 14],
+      iconAnchor: [7, 7],
       className: '',
     });
 
     // Destination marker
     const destIcon = L.divIcon({
-      html: `<div style="width:12px;height:12px;background:hsl(0,65%,52%);border:2px solid white;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,0.2);"></div>`,
-      iconSize: [12, 12],
-      iconAnchor: [6, 6],
+      html: `<div style="width:14px;height:14px;background:hsl(0,80%,55%);border:3px solid white;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,0.3);"></div>`,
+      iconSize: [14, 14],
+      iconAnchor: [7, 7],
       className: '',
     });
 
@@ -88,11 +88,11 @@ export default function HistoryDetail() {
     <div className="min-h-screen pb-20 flex flex-col">
       {/* Header */}
       <div className="px-4 pt-4 pb-3 flex items-center gap-3">
-        <button onClick={() => navigate('/history')} className="p-1.5 rounded-md bg-card border border-border">
-          <ArrowLeft size={16} className="text-foreground" />
+        <button onClick={() => navigate('/history')} className="p-2 rounded-lg bg-card border border-border">
+          <ArrowLeft size={18} className="text-foreground" />
         </button>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-foreground truncate">{route.origin}</p>
+          <p className="text-sm font-semibold text-foreground truncate">{route.origin}</p>
           <p className="text-xs text-muted-foreground truncate flex items-center gap-1">
             <MapPin size={10} /> {route.destination}
           </p>
@@ -114,11 +114,11 @@ export default function HistoryDetail() {
         </div>
 
         {/* Stats grid */}
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-3 gap-3">
           {stats.map((stat, i) => (
-            <div key={i} className="p-2.5 rounded-lg bg-card border border-border text-center">
-              <stat.icon size={14} className="mx-auto mb-1 text-primary" />
-              <p className="text-sm font-semibold text-foreground">{stat.value}</p>
+            <div key={i} className="p-3 rounded-xl bg-card border border-border text-center">
+              <stat.icon size={16} className="mx-auto mb-1 text-primary" />
+              <p className="text-sm font-bold text-foreground">{stat.value}</p>
               <p className="text-[10px] text-muted-foreground">{stat.label}</p>
             </div>
           ))}
