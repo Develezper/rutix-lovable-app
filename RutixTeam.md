@@ -8,10 +8,10 @@ Logistics / Mobility
 - **Live Deploy:** [rutix.lovable.app](https://rutix-lovable-app.lovable.app/)
 
 ## 👥 Team Members
-- **Juan Pablo Vélez** – Product Lead / Full Stack Developer  
-- **Santiago** – Frontend Developer  
-- **Franklin** – Backend Developer  
-- **Camilo** – Data & System Architecture   
+- **Juan Pablo Vélez** – Backend Developer
+- **Santiago** – Data & System Architecture    
+- **Franklin** – Frontend Developer  
+- **Camilo** – Backend Developer
 
 ## 📌 Short Description
 RUTIX is a collaborative bus navigation platform for the Aburrá Valley. It calculates optimal routes with transfers using graph-based routing and real-time GPS tracking. The system detects repeated travel patterns, validates routes through community evidence, and prioritizes reliability to deliver accurate and scalable public transport intelligence.
