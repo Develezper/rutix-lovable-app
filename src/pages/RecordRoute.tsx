@@ -263,19 +263,14 @@ export default function RecordRoute() {
               <div className="grid grid-cols-2 gap-2">
                 <div className="glass-card p-3 text-center">
                   <Clock size={16} className="text-primary mx-auto mb-1" />
-                  <p className="text-lg font-bold font-mono text-foreground">{formatTime(Math.max(0, estimatedTotalTime - movingTime))}</p>
-                   <p className="text-[10px] text-muted-foreground">Tiempo est. llegada</p>
+                  <p className="text-lg font-bold font-mono text-foreground">{formatTime(movingTime)}</p>
+                   <p className="text-[10px] text-muted-foreground">Tiempo en movimiento</p>
                 </div>
                 <div className="glass-card p-3 text-center">
-                  <Navigation size={16} className="text-transit-blue mx-auto mb-1" />
+                  <Navigation size={16} className="text-primary mx-auto mb-1" />
                   <p className="text-lg font-bold text-foreground text-center">{(distance / 1000).toFixed(1)}</p>
-                  <p className="text-[10px] text-muted-foreground">km</p>
+                  <p className="text-[10px] text-muted-foreground">km recorridos</p>
                 </div>
-                
-
-
-
-
               </div>
 
               <button
