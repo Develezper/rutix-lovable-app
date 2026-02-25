@@ -1,6 +1,5 @@
 import { Clock, Footprints, ArrowRightLeft, Star, ChevronRight } from 'lucide-react';
 import type { RouteResult } from '@/data/mockData';
-import { motion } from 'framer-motion';
 
 interface RouteCardProps {
   route: RouteResult;
@@ -10,70 +9,66 @@ interface RouteCardProps {
 }
 
 export default function RouteCard({ route, index, selected, onClick }: RouteCardProps) {
-  const busSegments = route.segments.filter((s) => s.type === 'bus');
   const isRecommended = index === 0;
 
   return (
-    <motion.button
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1 }}
+    <button
       onClick={onClick}
-      className={`w-full text-left p-4 rounded-xl border transition-all ${
-      selected ?
-      'border-primary bg-primary/5 shadow-md' :
-      'border-border bg-card hover:border-primary/30 hover:shadow-sm'}`
-      }>
-
+      className={`w-full text-left p-3.5 rounded-lg border transition-all ${
+        selected
+          ? 'border-primary bg-primary/5 shadow-sm'
+          : 'border-border bg-card hover:border-primary/30'
+      }`}
+    >
       {/* Header */}
-      <div className="flex items-center justify-between mb-3">
+      <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
-          <span className="text-xl font-bold text-foreground">{route.totalTime} min</span>
-          {isRecommended &&
-          <span className="transit-badge bg-primary/15 text-primary">
-              <Star size={10} className="fill-current" /> Recomendada
+          <span className="text-lg font-semibold text-foreground">{route.totalTime} min</span>
+          {isRecommended && (
+            <span className="transit-badge bg-primary/10 text-primary">
+              <Star size={10} className="fill-current" /> Mejor
             </span>
-          }
+          )}
         </div>
         <div className="flex items-center gap-1 text-muted-foreground">
-          <span className="text-sm font-medium">${route.fare.toLocaleString()}</span>
-          <ChevronRight size={16} />
+          <span className="text-sm">${route.fare.toLocaleString()}</span>
+          <ChevronRight size={14} />
         </div>
       </div>
 
-      {/* Bus route badges */}
-      <div className="flex items-center gap-1.5 mb-3 flex-wrap">
-        {route.segments.map((seg, i) =>
-        <div key={i} className="flex items-center gap-1">
-            {i > 0 && <ChevronRight size={12} className="text-muted-foreground" />}
-            {seg.type === 'bus' ?
-          <span
-            className="transit-badge text-primary-foreground"
-            style={{ backgroundColor: seg.busRoute?.color }}>
-
-                🚌 {seg.busRoute?.code}
-              </span> :
-
-          <span className="transit-badge bg-muted text-muted-foreground">
-                🚶 {seg.duration}min
+      {/* Segments */}
+      <div className="flex items-center gap-1 mb-2 flex-wrap">
+        {route.segments.map((seg, i) => (
+          <div key={i} className="flex items-center gap-1">
+            {i > 0 && <ChevronRight size={10} className="text-muted-foreground" />}
+            {seg.type === 'bus' ? (
+              <span
+                className="transit-badge text-primary-foreground"
+                style={{ backgroundColor: seg.busRoute?.color }}
+              >
+                {seg.busRoute?.code}
               </span>
-          }
+            ) : (
+              <span className="transit-badge bg-muted text-muted-foreground">
+                {seg.duration}min
+              </span>
+            )}
           </div>
-        )}
+        ))}
       </div>
 
       {/* Stats */}
-      <div className="flex items-center gap-4 text-xs text-muted-foreground">
+      <div className="flex items-center gap-3 text-[11px] text-muted-foreground">
         <span className="flex items-center gap-1">
-          <Footprints size={12} /> {route.walkingTime} min caminando
+          <Footprints size={11} /> {route.walkingTime} min
         </span>
         <span className="flex items-center gap-1">
-          <ArrowRightLeft size={12} /> {route.transfers} transbordo{route.transfers !== 1 ? 's' : ''}
+          <ArrowRightLeft size={11} /> {route.transfers} transb.
         </span>
         <span className="flex items-center gap-1">
-          <Star size={12} className="fill-current text-amber-400 bg-transparent" /> {route.confidence}%
+          <Star size={11} className="fill-current text-amber-500" /> {route.confidence}%
         </span>
       </div>
-    </motion.button>);
-
+    </button>
+  );
 }
