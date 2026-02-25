@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ChevronDown, Navigation } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import MapView from '@/components/MapView';
 import RouteCard from '@/components/RouteCard';
 import RouteDetails from '@/components/RouteDetails';
@@ -31,86 +31,61 @@ export default function RouteResults() {
     { position: selected.segments[selected.segments.length - 1].to.lat ? [selected.segments[selected.segments.length - 1].to.lat, selected.segments[selected.segments.length - 1].to.lng] as [number, number] : [6.33, -75.55] as [number, number], label: to, color: '#ef4444' },
   ] : [];
 
-  // Navigation mode
   if (navigating && selected) {
-    return (
-      <NavigationView
-        route={selected}
-        from={from}
-        to={to}
-        onExit={() => setNavigating(false)}
-      />
-    );
+    return <NavigationView route={selected} from={from} to={to} onExit={() => setNavigating(false)} />;
   }
 
   return (
     <div className="min-h-screen flex flex-col pb-20">
       {/* Map */}
-      <div className="relative h-[40vh]">
-        <MapView
-          center={[6.28, -75.56]}
-          zoom={12}
-          segments={mapSegments}
-          markers={mapMarkers}
-        />
+      <div className="relative h-[38vh]">
+        <MapView center={[6.28, -75.56]} zoom={12} segments={mapSegments} markers={mapMarkers} />
 
-        {/* Back button */}
         <button
           onClick={() => navigate('/')}
-          className="absolute top-4 left-4 z-[1000] glass-card p-2.5 rounded-xl"
+          className="absolute top-4 left-4 z-[1000] glass-card p-2 rounded-lg"
         >
-          <ArrowLeft size={20} className="text-foreground" />
+          <ArrowLeft size={18} className="text-foreground" />
         </button>
 
-        {/* Route info overlay */}
-        <div className="absolute top-4 left-16 right-4 z-[1000]">
-          <div className="glass-card px-4 py-2.5">
-            <p className="text-xs text-muted-foreground">Ruta</p>
+        <div className="absolute top-4 left-14 right-4 z-[1000]">
+          <div className="glass-card px-3 py-2">
+            <p className="text-[10px] text-muted-foreground">Ruta</p>
             <p className="text-sm font-medium text-foreground truncate">{from} → {to}</p>
           </div>
         </div>
       </div>
 
-      {/* Results panel */}
-      <div
-        className="relative -mt-6 flex-1 bg-background rounded-t-2xl z-[1000] px-4 pt-5"
-      >
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-base font-bold text-foreground">
+      {/* Results */}
+      <div className="relative -mt-5 flex-1 bg-background rounded-t-xl z-[1000] px-4 pt-4">
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-sm font-semibold text-foreground">
             {routes.length} ruta{routes.length !== 1 ? 's' : ''} encontrada{routes.length !== 1 ? 's' : ''}
           </h2>
-          <span className="text-xs text-muted-foreground">Ordenado por menor tiempo</span>
+          <span className="text-[10px] text-muted-foreground">Por menor tiempo</span>
         </div>
 
-        {/* Route cards */}
-        <div className="space-y-3 mb-4">
+        <div className="space-y-2 mb-3">
           {routes.map((route, i) => (
             <RouteCard
               key={route.id}
               route={route}
               index={i}
               selected={i === selectedIdx}
-              onClick={() => {
-                setSelectedIdx(i);
-                setShowDetails(true);
-              }}
+              onClick={() => { setSelectedIdx(i); setShowDetails(true); }}
             />
           ))}
         </div>
 
-        {/* Navigate button */}
         {showDetails && selected && (
-          <motion.button
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
+          <button
             onClick={() => setNavigating(true)}
-            className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-green-500 text-white font-semibold mb-4 transition-all hover:bg-green-600"
+            className="w-full flex items-center justify-center gap-2 py-3 rounded-lg bg-primary text-primary-foreground font-medium mb-3 transition-all hover:opacity-90"
           >
-            <Navigation size={18} /> Iniciar navegación GPS
-          </motion.button>
+            <Navigation size={16} /> Iniciar navegación
+          </button>
         )}
 
-        {/* Route details */}
         <AnimatePresence>
           {showDetails && selected && (
             <motion.div
@@ -119,10 +94,10 @@ export default function RouteResults() {
               exit={{ height: 0, opacity: 0 }}
               className="overflow-hidden"
             >
-              <div className="border-t border-border pt-4 mb-6">
+              <div className="border-t border-border pt-3 mb-6">
                 <button
                   onClick={() => setShowDetails(false)}
-                  className="flex items-center gap-1 text-xs text-primary mb-4"
+                  className="flex items-center gap-1 text-xs text-primary mb-3"
                 >
                   <ChevronDown size={14} /> Ocultar instrucciones
                 </button>
