@@ -1,76 +1,63 @@
-# Welcome to your Lovable project
+# RutaAburra (Rutix)
 
-## Project info
+Web app to check bus routes in Valle de Aburra, simulate navigation, and record GPS traces collaboratively.
 
-**URL**: https://rutix-lovable-app.lovable.app/
+## Live app
 
-## How can I edit this code?
+https://rutix-lovable-app.lovable.app/
 
-There are several ways of editing your application.
+## What this app includes
 
-**Use Lovable**
+- Route search between origin and destination.
+- Map view for routes and stops.
+- Results view with details for each route option.
+- Guided navigation mode.
+- Route recording (GPS simulation).
+- Saved routes history.
+- Admin panel with stats, routes, and traces.
 
-Simply visit the [Lovable Project](https://rutix-lovable-app.lovable.app/) and start prompting.
+## Technologies
 
-Changes made via Lovable will be committed automatically to this repo.
+- React + TypeScript
+- Vite
+- Tailwind CSS
+- shadcn/ui
+- React Router
+- Leaflet (maps)
 
-**Use your preferred IDE**
+## How to run the project
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Requirements:
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- Node.js 18 or higher
+- npm
 
-Follow these steps:
+Steps:
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The app will be available at the URL shown by Vite (usually `http://localhost:5173`).
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Useful scripts
 
-**Use GitHub Codespaces**
+- `npm run dev`: start development server.
+- `npm run build`: build for production.
+- `npm run preview`: preview production build.
+- `npm run lint`: run linter.
+- `npm run test`: run tests with Vitest.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Main routes
 
-## What technologies are used for this project?
+- `/`: home and route search.
+- `/results`: route results.
+- `/record`: record route.
+- `/history`: history.
+- `/admin`: admin panel.
 
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## Screenshots
 
 <img width="450" height="983" alt="image" src="https://github.com/user-attachments/assets/74f9a405-d50c-4390-b675-9a51681150a0" />
 <img width="450" height="983" alt="image" src="https://github.com/user-attachments/assets/c952deaf-4fcc-415f-81f9-7ac79a7f4106" />
@@ -83,5 +70,3 @@ Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/c
 <img width="450" height="983" alt="image" src="https://github.com/user-attachments/assets/fd3a5ec5-3dcd-4f03-868b-87c161bba52c" />
 <img width="450" height="983" alt="image" src="https://github.com/user-attachments/assets/7cf3d1e0-9628-4cf9-a7f4-3dd7a7146e52" />
 <img width="450" height="983" alt="image" src="https://github.com/user-attachments/assets/b0d0d01c-4dfa-4332-84e5-ffb1735f8156" />
-
-
