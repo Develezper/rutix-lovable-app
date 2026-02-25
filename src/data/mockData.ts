@@ -51,6 +51,10 @@ export interface SavedRoute {
   totalTime: number;
   transfers: number;
   busRoutes: string[];
+  distance: number; // km
+  fare: number;
+  walkingTime: number;
+  path: [number, number][];
 }
 
 export interface RecordedTrace {
@@ -318,12 +322,12 @@ function getDefaultRouteResults(): RouteResult[] {
 
 // Historial de rutas guardadas simulado
 export const savedRoutes: SavedRoute[] = [
-  { id: 'h1', origin: 'Parque de Aranjuez', destination: 'Parque de Bello', date: '2026-02-18', totalTime: 35, transfers: 0, busRoutes: ['301A'] },
-  { id: 'h2', origin: 'Estación Poblado', destination: 'Universidad de Medellín', date: '2026-02-17', totalTime: 42, transfers: 1, busRoutes: ['125', 'C6'] },
-  { id: 'h3', origin: 'Parque Envigado', destination: 'Terminal del Norte', date: '2026-02-15', totalTime: 55, transfers: 0, busRoutes: ['345'] },
-  { id: 'h4', origin: 'Sabaneta Parque', destination: 'Parque Berrío', date: '2026-02-14', totalTime: 48, transfers: 1, busRoutes: ['410', '125'] },
-  { id: 'h5', origin: 'Copacabana Centro', destination: 'Estadio Atanasio Girardot', date: '2026-02-12', totalTime: 65, transfers: 2, busRoutes: ['290', '301A', 'C6'] },
-  { id: 'h6', origin: 'La Estrella Centro', destination: 'Universidad de Antioquia', date: '2026-02-10', totalTime: 58, transfers: 1, busRoutes: ['410', '080'] },
+  { id: 'h1', origin: 'Parque de Aranjuez', destination: 'Parque de Bello', date: '2026-02-18', totalTime: 35, transfers: 0, busRoutes: ['301A'], distance: 8.5, fare: 2950, walkingTime: 8, path: [[6.2748, -75.5544], [6.2720, -75.5570], [6.2690, -75.5637], [6.2781, -75.5712], [6.2900, -75.5735], [6.3185, -75.5530], [6.3345, -75.5560]] },
+  { id: 'h2', origin: 'Estación Poblado', destination: 'Universidad de Medellín', date: '2026-02-17', totalTime: 42, transfers: 1, busRoutes: ['125', 'C6'], distance: 10.2, fare: 5900, walkingTime: 10, path: [[6.2105, -75.5755], [6.2370, -75.5770], [6.2470, -75.5690], [6.2440, -75.5740], [6.2350, -75.5850], [6.2345, -75.5905], [6.2310, -75.6100]] },
+  { id: 'h3', origin: 'Parque Envigado', destination: 'Terminal del Norte', date: '2026-02-15', totalTime: 55, transfers: 0, busRoutes: ['345'], distance: 15.8, fare: 2950, walkingTime: 6, path: [[6.1752, -75.5907], [6.1747, -75.5832], [6.2105, -75.5755], [6.2370, -75.5770], [6.2518, -75.5636], [6.2781, -75.5712], [6.2900, -75.5735]] },
+  { id: 'h4', origin: 'Sabaneta Parque', destination: 'Parque Berrío', date: '2026-02-14', totalTime: 48, transfers: 1, busRoutes: ['410', '125'], distance: 13.4, fare: 5900, walkingTime: 12, path: [[6.1517, -75.6167], [6.1590, -75.6290], [6.1850, -75.5995], [6.2105, -75.5755], [6.2370, -75.5770], [6.2470, -75.5690], [6.2518, -75.5636]] },
+  { id: 'h5', origin: 'Copacabana Centro', destination: 'Estadio Atanasio Girardot', date: '2026-02-12', totalTime: 65, transfers: 2, busRoutes: ['290', '301A', 'C6'], distance: 18.7, fare: 8850, walkingTime: 15, path: [[6.3500, -75.5100], [6.3379, -75.5441], [6.3185, -75.5530], [6.2900, -75.5735], [6.2781, -75.5712], [6.2690, -75.5637], [6.2518, -75.5636], [6.2470, -75.5690], [6.2350, -75.5850], [6.2345, -75.5905]] },
+  { id: 'h6', origin: 'La Estrella Centro', destination: 'Universidad de Antioquia', date: '2026-02-10', totalTime: 58, transfers: 1, busRoutes: ['410', '080'], distance: 16.1, fare: 5900, walkingTime: 8, path: [[6.1590, -75.6290], [6.1517, -75.6167], [6.1850, -75.5995], [6.2105, -75.5755], [6.2370, -75.5770], [6.2470, -75.5690], [6.2560, -75.5620], [6.2680, -75.5680]] },
 ];
 
 // Trazas GPS grabadas (admin)

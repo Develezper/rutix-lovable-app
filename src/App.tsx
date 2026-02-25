@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import RouteResults from "./pages/RouteResults";
 import RecordRoute from "./pages/RecordRoute";
 import History from "./pages/History";
+import HistoryDetail from "./pages/HistoryDetail";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
@@ -25,6 +26,7 @@ const App = () => (
             <Route path="/results" element={<RouteResults />} />
             <Route path="/record" element={<RecordRoute />} />
             <Route path="/history" element={<History />} />
+            <Route path="/history/:id" element={<HistoryDetail />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
