@@ -20,7 +20,7 @@ export default function HistoryPage() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.05 }}
-            onClick={() => navigate(`/results?from=${encodeURIComponent(route.origin)}&to=${encodeURIComponent(route.destination)}`)}
+            onClick={() => navigate(`/history/${route.id}`)}
             className="w-full text-left p-4 rounded-xl bg-card border border-border hover:border-primary/30 transition-all"
           >
             <div className="flex items-start justify-between mb-2">
