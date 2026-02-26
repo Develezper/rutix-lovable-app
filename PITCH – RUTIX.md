@@ -1,104 +1,38 @@
-# PITCH – RUTIX (Technical Strategic Version)
+# PITCH: RUTIX – Versión Técnica Estratégica (Scrum Edition)
 
-## 👥 Who Is Speaking
+## 👥 1. El Equipo (The Scrum Team)
+"Hola, somos el equipo **RUTIX**. No solo desarrollamos software, somos un equipo autogestionado aplicando metodologías ágiles para transformar la movilidad en el Valle de Aburrá."
 
-Hello, we are the **RUTIX** team.
-
-I am Juan Pablo, Backend Developer.  
-With me are:
-- **Santiago** – Data & Systems Architecture  
-- **Franklin** – Frontend Developer  
-- **Camilo** – Backend Developer  
-
-Today we present **RUTIX**, a collaborative bus navigation platform for the Aburrá Valley.
+* **Juan Pablo (Product Owner):** "Como PO, mi foco es maximizar el valor del producto, asegurando que cada funcionalidad del *backlog* resuelva una necesidad real del ciudadano."
+* **Santiago (Scrum Master):** "Mi rol es garantizar la eficiencia del proceso, eliminando impedimentos técnicos y fomentando la mejora continua en cada iteración."
+* **Franklin & Camilo (Development Team):** "Nosotros nos encargamos del 'cómo', transformando datos complejos en un incremento de software funcional, escalable y de alta calidad."
 
 ---
 
-## ⏱ What Problem Are We Solving? (30 seconds)
+## ⏱ 2. El Problema (Visión de Usuario)
+En la movilidad urbana del Valle de Aburrá, el transporte en bus enfrenta un problema de **incertidumbre estructural**. La información:
+* No está centralizada.
+* No está actualizada.
+* **No es confiable.**
 
-In urban mobility, bus transportation faces a structural problem:
-
-Route information:
-- Is not centralized  
-- Is not updated  
-- Is not reliable  
-
-People don’t know which bus to take, where to transfer, or which option is the most efficient.
-
-The result:
-Time loss, uncertainty, and inefficient mobility.
-
-The problem is not transportation availability.  
-It is the lack of structured and validated information.
+El problema no es la falta de buses, es la **falta de información estructurada y validada**. El resultado para el usuario es pérdida de tiempo y una movilidad ineficiente.
 
 ---
 
-## ⚙ How Does Our Solution Change the Process? (60 seconds)
+## ⚙️ 3. La Solución (Ingeniería de Valor)
+RUTIX no es un mapa estático; es un sistema que evoluciona mediante **inspección y adaptación**. Modelamos el sistema de buses como un **grafo dinámico**:
 
-RUTIX models the bus system as a **structured graph**:
+* **Nodos y Aristas:** Paradas y conexiones basadas en datos reales.
+* **Lógica Determinista:** El tiempo de viaje se calcula basado en el **movimiento real del vehículo**, eliminando el ruido de tiempos muertos en paradas.
+* **Capa de IA Ligera:** Usamos inteligencia artificial para la detección de similitud entre trayectorias y el ajuste dinámico de promedios históricos.
 
-- Bus stops → Nodes  
-- Route connections → Edges  
-- Costs → Estimated time + transfer penalties  
-
-We use classical route optimization algorithms to calculate the minimum total travel time.
-
-The system’s intelligence does not rely on assumptions, but on real-world data:
-
-1. Users can record bus trips.  
-2. Time is counted only when real vehicle movement is detected.  
-3. GPS traces are stored by segments.  
-4. Similar routes are compared using geospatial proximity analysis.  
-5. When multiple users repeat the same pattern, the system consolidates the route automatically.
-
-A lightweight AI layer supports the system by:
-
-- Detecting similarity between trajectories  
-- Dynamically adjusting average travel times  
-- Prioritizing routes with higher historical evidence  
-
-The AI supports decision-making, but the core logic is algorithmic and deterministic.
-
-Our interface is intelligent because it:
-
-- Autocompletes destinations in real time  
-- Orders routes by efficiency and reliability  
-- Improves with each new recorded trip  
-- Enables community validation  
+> **Clave:** La IA apoya la toma de decisiones, pero la lógica central es algorítmica y basada en evidencia empírica.
 
 ---
 
-## 🖥 Live Demo (60 seconds)
+## 🖥️ 4. Demo en Vivo (Incremento de Producto)
+*Presentación del estado actual del software ([rutix.lovable.app](https://rutix.lovable.app)):*
 
-Now we will show the platform.
-
-👉 **rutix.lovable.app**
-
-1. We search for an origin and destination.  
-2. The system calculates optimized routes with transfers.  
-3. We compare alternatives before starting.  
-4. The full route is previewed on the map.
-
-Next, we activate:
-**“I’m on this bus.”**
-
-- The map follows real-time movement.  
-- Time is tracked only during actual motion.  
-- When finished, a confirmation message appears:  
-  **“Route saved successfully.”**
-
-Users can also:
-- View their route history  
-- Access the admin panel to detect repeated patterns and validate routes  
-
----
-
-## 🎯 Closing
-
-RUTIX is not just another map application.
-
-It is a logical, collaborative route-building system,
-where real user data improves urban mobility.
-
-Technology does not replace the user.  
-It empowers them.
+1.  **Planificación:** El usuario busca origen y destino; el sistema calcula rutas optimizadas con transbordos.
+2.  **Validación en tiempo real:** Al activar *"Estoy en este bus"*, el sistema inicia la captura de trazas GPS por segmentos.
+3.  **Definición de Hecho (DoD):** Al finalizar, la ruta se guarda exitosamente, alimentando el historial y validando el
